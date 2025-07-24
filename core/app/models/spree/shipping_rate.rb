@@ -17,7 +17,10 @@ module Spree
     delegate :order, :currency, to: :shipment
     delegate :name, :tax_category, :tax_category_id, to: :shipping_method
     delegate :code, to: :shipping_method, prefix: true
-    alias_attribute :amount, :cost
+
+    def amount
+      cost
+    end
 
     alias_method :discounted_amount, :amount
     deprecate discounted_amount: :total_before_tax, deprecator: Spree::Deprecation
