@@ -84,4 +84,4 @@ module Spree
 end
 
 # @private
-OrderWalkthrough = ActiveSupport::Deprecation::DeprecatedConstantProxy.new('OrderWalkthrough', 'Spree::TestingSupport::OrderWalkthrough')
+OrderWalkthrough = ActiveSupport::Deprecation::DeprecatedConstantProxy.new('OrderWalkthrough', 'Spree::TestingSupport::OrderWalkthrough', ActiveSupport::Deprecation.new)
