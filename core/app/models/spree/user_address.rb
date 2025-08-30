@@ -10,7 +10,7 @@ module Spree
 
     scope :with_address_values, ->(address_attributes) do
       joins(:address).merge(
-        Spree::Address.with_values(address_attributes)
+        Spree::Address.with_attributes(address_attributes)
       )
     end
 

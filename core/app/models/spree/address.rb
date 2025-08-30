@@ -44,7 +44,7 @@ module Spree
 
     self.whitelisted_ransackable_attributes = %w[firstname lastname]
 
-    scope :with_values, ->(attributes) do
+    scope :with_attributes, ->(attributes) do
       where(value_attributes(attributes))
     end
 
