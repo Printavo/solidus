@@ -17,7 +17,7 @@ module Spree
         end
       end
 
-      RablTemplate = ActiveSupport::Deprecation::DeprecatedConstantProxy.new('RablTemplate', 'JbuilderTemplate', ActiveSupport::Deprecation.new)
+      RablTemplate = ActiveSupport::Deprecation::DeprecatedConstantProxy.new('RablTemplate', 'JbuilderTemplate', ActiveSupport::Deprecation.instance)
     end
   end
 end
