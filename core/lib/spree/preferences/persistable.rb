@@ -7,7 +7,7 @@ module Spree
 
       included do
         include Spree::Preferences::Preferable
-        serialize :preferences, coder: JSON, type: ActiveSupport::HashWithIndifferentAccess
+        serialize :preferences, coder: YAML, type: Hash
         after_initialize :initialize_preference_defaults
       end
 
