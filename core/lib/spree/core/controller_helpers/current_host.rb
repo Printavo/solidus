@@ -8,7 +8,7 @@ module Spree
 
         included do
           before_action do
-            ActiveStorage::Current.host = request.base_url
+            ActiveStorage::Current.url_options = { host: request.host }
           end
         end
       end
