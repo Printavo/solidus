@@ -25,7 +25,6 @@ module Spree
     has_many :capture_events, class_name: 'Spree::PaymentCaptureEvent'
     has_many :refunds, inverse_of: :payment
 
-    before_validation :validate_source, unless: :invalid?
     before_create :set_unique_identifier
 
     after_save :create_payment_profile, if: :profiles_supported?
@@ -42,6 +41,7 @@ module Spree
 
     validates :amount, numericality: true
     validates :source, presence: true, if: :source_required?
+    validates_associated :source
     validates :payment_method, presence: true
 
     default_scope -> { order(:created_at) }
@@ -164,25 +164,6 @@ module Spree
     def source_actions
       return [] unless payment_source && payment_source.respond_to?(:actions)
       payment_source.actions.select { |action| !payment_source.respond_to?("can_#{action}?") || payment_source.send("can_#{action}?", self) }
-    end
-
-    def validate_source
-      if source && !source.valid?
-        if Gem::Requirement.new(">= 6.1").satisfied_by?(Rails.gem_version)
-          source.errors.each do |error|
-            field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{error.attribute}")
-            errors.add(I18n.t(source.class.to_s.demodulize.underscore, scope: 'spree'), "#{field_name} #{error.message}")
-          end
-        else
-          source.errors.each do |field, error|
-            field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{field}")
-            errors.add(I18n.t(source.class.to_s.demodulize.underscore, scope: 'spree'), "#{field_name} #{error}")
-          end
-        end
-      end
-      if errors.any?
-        throw :abort
-      end
     end
 
     def source_required?
