@@ -46,7 +46,9 @@ module Spree
       def order
         # Fix regression that removed package.order.
         # Find it dynamically through an inventory_unit.
-        contents.detect { |item| !!item.try(:line_item).try(:order) }.try(:line_item).try(:order)
+        # Rails 7.2 fix: Add fallback to shipment.order if line_item approach fails
+        contents.detect { |item| !!item.try(:line_item).try(:order) }.try(:line_item).try(:order) ||
+          shipment&.order
       end
 
       # @return [Float] the summed weight of the contents of this package
