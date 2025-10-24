@@ -19,7 +19,7 @@ module Spree
     has_one :product, through: :variant
 
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
-    has_many :inventory_units, inverse_of: :line_item
+    has_many :inventory_units, class_name: 'Spree::InventoryUnit', inverse_of: :line_item
 
     has_many :line_item_actions, dependent: :destroy
     has_many :actions, through: :line_item_actions

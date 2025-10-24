@@ -8,7 +8,7 @@ module Spree
     belongs_to :stock_location, class_name: 'Spree::StockLocation', optional: true
 
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all
-    has_many :inventory_units, dependent: :destroy, inverse_of: :shipment
+    has_many :inventory_units, class_name: 'Spree::InventoryUnit', dependent: :destroy, inverse_of: :shipment
     has_many :shipping_rates, -> { order(:cost) }, dependent: :destroy, inverse_of: :shipment
     has_many :shipping_methods, through: :shipping_rates
     has_many :state_changes, as: :stateful
@@ -262,7 +262,7 @@ module Spree
     def to_package
       package = Stock::Package.new(stock_location)
       package.shipment = self
-      inventory_units.includes(variant: :product).joins(:variant).group_by(&:state).each do |state, state_inventory_units|
+      inventory_units.includes(line_item: :order, variant: :product).joins(:variant).group_by(&:state).each do |state, state_inventory_units|
         package.add_multiple state_inventory_units, state.to_sym
       end
       package
