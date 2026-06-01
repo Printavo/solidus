@@ -333,13 +333,13 @@ module Spree
     end
 
     def transfer_to_location(variant, quantity, stock_location)
-      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location", caller)
+      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location")
       new_shipment = order.shipments.create!(stock_location: stock_location)
       transfer_to_shipment(variant, quantity, new_shipment)
     end
 
     def transfer_to_shipment(variant, quantity, shipment_to_transfer_to)
-      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location", caller)
+      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location")
       Spree::FulfilmentChanger.new(
         current_shipment: self,
         desired_shipment: shipment_to_transfer_to,
@@ -353,7 +353,7 @@ module Spree
     end
 
     def address
-      Spree::Deprecation.warn("Calling Shipment#address is deprecated. Use Order#ship_address instead", caller)
+      Spree::Deprecation.warn("Calling Shipment#address is deprecated. Use Order#ship_address instead")
       order.ship_address if order
     end
 

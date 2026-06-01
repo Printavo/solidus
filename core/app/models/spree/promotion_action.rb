@@ -33,7 +33,7 @@ module Spree
     # @param order [Spree::Order] the order to remove the action from
     # @return [void]
     def remove_from(order)
-      Spree::Deprecation.warn("#{self.class.name.inspect} does not define #remove_from. The default behavior may be incorrect and will be removed in a future version of Solidus.", caller)
+      Spree::Deprecation.warn("#{self.class.name.inspect} does not define #remove_from. The default behavior may be incorrect and will be removed in a future version of Solidus.")
       [order, *order.line_items, *order.shipments].each do |item|
         item.adjustments.each do |adjustment|
           if adjustment.source == self

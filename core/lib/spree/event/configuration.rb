@@ -8,7 +8,7 @@ module Spree
       end
 
       def subscribers
-        Spree::Deprecation.warn("`Spree::Config.events.subscribers` is deprecated. Please use `Spree::Config.events.subscriber_registry`.", caller)
+        Spree::Deprecation.warn("`Spree::Config.events.subscribers` is deprecated. Please use `Spree::Config.events.subscriber_registry`.")
         subscriber_registry.send(:registry).keys.map { |module_name| module_name.constantize }
       end
 

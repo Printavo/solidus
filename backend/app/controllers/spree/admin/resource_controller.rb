@@ -149,7 +149,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def model_name
-    Spree::Deprecation.warn('model_name is deprecated. Please use parent_model_name instead.', caller)
+    Spree::Deprecation.warn('model_name is deprecated. Please use parent_model_name instead.')
     parent_model_name
   end
 
@@ -186,7 +186,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def parent_data
-    Spree::Deprecation.warn('parent_data is deprecated without replacement.', caller)
+    Spree::Deprecation.warn('parent_data is deprecated without replacement.')
     self.class.parent_data
   end
 

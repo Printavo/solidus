@@ -41,7 +41,7 @@ module Spree
           @money = Monetize.from_string(amount, currency)
         else
           @money = Spree::Money.parse_to_money(amount, currency)
-          Spree::Deprecation.warn <<-WARN.squish, caller
+          Spree::Deprecation.warn <<-WARN.squish
             Spree::Money was initialized with #{amount.inspect}, which will not be supported in the future.
             Instead use Spree::Money.new(#{@money.to_s.inspect}, options) or Spree::Money.parse(#{amount.inspect})
           WARN
@@ -81,7 +81,7 @@ module Spree
       output = format(options)
       # Maintain compatibility by checking html option renamed to html_wrap.
       if options[:html] || options[:html] == false
-        Spree::Deprecation.warn <<-WARN.squish, caller
+        Spree::Deprecation.warn <<-WARN.squish
           Spree::Money#to_html called with Spree::Money#to_html(html: #{options[:html].inspect}),
           which will not be supported in the future.
           Instead use :html_wrap e.g. Spree::Money#to_html(html_wrap: #{options[:html].inspect})

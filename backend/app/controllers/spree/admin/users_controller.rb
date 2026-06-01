@@ -82,7 +82,7 @@ module Spree
       end
 
       def generate_api_key
-        Spree::Deprecation.warn <<-WARN.strip_heredoc, caller
+        Spree::Deprecation.warn <<-WARN.strip_heredoc
           The route or controller action you are using is deprecated.
 
           Instead of:
@@ -99,7 +99,7 @@ module Spree
       end
 
       def clear_api_key
-        Spree::Deprecation.warn <<-WARN.strip_heredoc, caller
+        Spree::Deprecation.warn <<-WARN.strip_heredoc
           The route or controller action you are using is deprecated.
 
           Instead of:

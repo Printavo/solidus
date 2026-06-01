@@ -51,7 +51,7 @@ module Spree
       end
 
       def load_providers
-        Spree::Deprecation.warn('load_providers is deprecated. Please use load_payment_method_types instead.', caller)
+        Spree::Deprecation.warn('load_providers is deprecated. Please use load_payment_method_types instead.')
         load_payment_method_types
       end
 
@@ -62,7 +62,7 @@ module Spree
       end
 
       def validate_payment_provider
-        Spree::Deprecation.warn('validate_payment_provider is deprecated. Please use validate_payment_method_type instead.', caller)
+        Spree::Deprecation.warn('validate_payment_provider is deprecated. Please use validate_payment_method_type instead.')
         validate_payment_method_type
       end
 

@@ -25,7 +25,7 @@ module Spree
             if Spree::Config.redirect_back_on_unauthorized
               redirect_back(fallback_location: "/unauthorized")
             else
-              Spree::Deprecation.warn <<-WARN.strip_heredoc, caller
+              Spree::Deprecation.warn <<-WARN.strip_heredoc
                 Having Spree::Config.redirect_back_on_unauthorized set
                 to `false` is deprecated and will not be supported in Solidus 3.0.
 

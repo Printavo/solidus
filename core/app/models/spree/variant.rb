@@ -128,7 +128,7 @@ module Spree
     # @param currency [String] the currency to filter by; defaults to Spree's default
     # @return [ActiveRecord::Relation]
     def self.active(currency = nil)
-      Spree::Deprecation.warn("`Variant.active(currency)` is deprecated. Please use `Variant.with_prices(pricing_options)` instead.", caller)
+      Spree::Deprecation.warn("`Variant.active(currency)` is deprecated. Please use `Variant.with_prices(pricing_options)` instead.")
       joins(:prices).where(deleted_at: nil).where('spree_prices.currency' => currency || Spree::Config[:currency]).where('spree_prices.amount IS NOT NULL')
     end
 

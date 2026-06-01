@@ -158,7 +158,7 @@ module Spree
     @@checkout_confirm_attributes = []
 
     def self.checkout_attributes
-      Spree::Deprecation.warn <<-WARN.squish, caller
+      Spree::Deprecation.warn <<-WARN.squish
         checkout_attributes is deprecated, please use the permitted
         attributes set for the specific step that needs to be updated.
 

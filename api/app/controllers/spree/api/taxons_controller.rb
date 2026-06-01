@@ -30,7 +30,7 @@ module Spree
       end
 
       def jstree
-        Spree::Deprecation.warn("Please don't use `/api/taxonomies/:taxonomy_id/taxons/:taxon_id/jstree` endpoint. It is deprecated and will be removed in the next future.", caller)
+        Spree::Deprecation.warn("Please don't use `/api/taxonomies/:taxonomy_id/taxons/:taxon_id/jstree` endpoint. It is deprecated and will be removed in the next future.")
         show
       end
 

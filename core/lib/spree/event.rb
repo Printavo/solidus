@@ -39,7 +39,7 @@ module Spree
     # Loading the files has the side effect of adding their module to the
     # list in Spree::Event.subscribers.
     def require_subscriber_files
-      Spree::Deprecation.warn("#{self}.require_subscriber_files is deprecated and will be removed in Solidus 3.0.", caller)
+      Spree::Deprecation.warn("#{self}.require_subscriber_files is deprecated and will be removed in Solidus 3.0.")
       subscriber_registry.send(:require_subscriber_files)
     end
 
@@ -127,7 +127,7 @@ module Spree
     # @!attribute [r] subscribers
     #   @return [Array<Spree::Event::Subscriber>] A list of subscribers used to support class reloading for Spree::Event::Subscriber instances
     def subscribers
-      Spree::Deprecation.warn("`#{self}.subscribers` is deprecated. Please use `#{self}.subscriber_registry` instead.", caller)
+      Spree::Deprecation.warn("`#{self}.subscribers` is deprecated. Please use `#{self}.subscriber_registry` instead.")
       Spree::Config.events.subscribers
     end
 

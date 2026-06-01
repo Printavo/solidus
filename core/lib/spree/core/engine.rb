@@ -82,7 +82,7 @@ module Spree
         end
 
         if Spree::Config.use_legacy_address_state_validator != false
-          Spree::Deprecation.warn(<<~DEPRECATION.squish, caller)
+          Spree::Deprecation.warn(<<~DEPRECATION.squish)
             Spree::Config.use_legacy_address_state_validator set to true has been
             deprecated and will be removed in Solidus 3.0. The Spree::Address state
             validation has been extracted into a configurable external class.

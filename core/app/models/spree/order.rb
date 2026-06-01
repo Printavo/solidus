@@ -670,7 +670,7 @@ module Spree
     end
 
     def token
-      Spree::Deprecation.warn("Spree::Order#token is DEPRECATED, please use #guest_token instead.", caller)
+      Spree::Deprecation.warn("Spree::Order#token is DEPRECATED, please use #guest_token instead.")
       guest_token
     end
 
@@ -867,7 +867,7 @@ module Spree
     #   }
     #
     def update_params_payment_source
-      Spree::Deprecation.warn('update_params_payment_source is deprecated. Please use set_payment_parameters_amount instead.', caller)
+      Spree::Deprecation.warn('update_params_payment_source is deprecated. Please use set_payment_parameters_amount instead.')
       if @updating_params[:order] && (@updating_params[:order][:payments_attributes] || @updating_params[:order][:existing_card])
         @updating_params[:order][:payments_attributes] ||= [{}]
         @updating_params[:order][:payments_attributes].first[:amount] = total
