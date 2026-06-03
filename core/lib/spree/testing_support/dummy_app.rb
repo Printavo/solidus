@@ -45,6 +45,8 @@ module DummyApp
   end
 
   class Application < ::Rails::Application
+    config.active_record.yaml_column_permitted_classes = [BigDecimal, Date, Symbol, Time]
+    config.after_initialize { ActiveRecord.yaml_column_permitted_classes |= [Spree::Role] }
     config.has_many_inverse = true
     config.eager_load = false
     config.cache_classes = true
@@ -63,7 +65,7 @@ module DummyApp
     config.secret_key_base = 'SECRET_TOKEN'
 
     config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob" if RAILS_6_OR_ABOVE
-    config.action_mailer.preview_path = File.expand_path('dummy_app/mailer_previews', __dir__)
+    config.action_mailer.preview_paths = [File.expand_path('dummy_app/mailer_previews', __dir__)]
     config.active_record.sqlite3.represent_boolean_as_integer = true unless RAILS_6_OR_ABOVE
 
     config.storage_path = Rails.root.join('tmp', 'storage')

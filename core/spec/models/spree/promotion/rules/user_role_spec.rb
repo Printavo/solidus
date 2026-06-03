@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Promotion::Rules::UserRole, type: :model do
-  let(:rule) { described_class.new(preferred_role_ids: roles_for_rule) }
+  # Ruby 3.4: role_ids preference stores Integer IDs (safe YAML rejects AR objects); pass ids, matching real app usage
+  let(:rule) { described_class.new(preferred_role_ids: roles_for_rule.map(&:id)) }
   let(:user) { create(:user, spree_roles: roles_for_user) }
   let(:roles_for_rule) { [] }
   let(:roles_for_user) { [] }

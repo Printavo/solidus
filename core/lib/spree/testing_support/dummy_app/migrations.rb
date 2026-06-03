@@ -16,7 +16,7 @@ module DummyApp
     def needs_migration?
       return true if !database_exists?
 
-      ActiveRecord::Base.connection.migration_context.needs_migration?
+      ActiveRecord::Base.connection_pool.migration_context.needs_migration?
     end
 
     def auto_migrate

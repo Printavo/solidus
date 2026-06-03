@@ -44,7 +44,8 @@ RSpec.describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
         # line_item_quantity = 3
         # adjustment_amount  = 10
         # 100 - (10 / 3)     = 96.66666666666666667
-        expect(subject).to eq BigDecimal('96.66666666666666667')
+        # Ruby 3.4: BigDecimal division yields higher default precision than Ruby 2.x
+        expect(subject).to eq BigDecimal('96.6666666666666666666666666666667')
       end
     end
 

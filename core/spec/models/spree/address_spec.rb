@@ -369,7 +369,8 @@ RSpec.describe Spree::Address, type: :model do
     it 'raises an exception if the iso is not found' do
       expect {
         address.country_iso = "NOCOUNTRY"
-      }.to raise_error(::ActiveRecord::RecordNotFound, "Couldn't find Spree::Country")
+      # Rails 6.1: RecordNotFound message now includes the finder conditions (WHERE clause)
+      }.to raise_error(::ActiveRecord::RecordNotFound, /Couldn.t find Spree::Country/)
     end
   end
 
