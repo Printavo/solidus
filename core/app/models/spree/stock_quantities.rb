@@ -57,6 +57,11 @@ module Spree
       end
     end
 
+    # Lets Array#sum (which seeds with Integer 0) work over StockQuantities on Ruby 3.4
+    def coerce(other)
+      [self.class.new, self]
+    end
+
     # A StockQuantities is empty if all variants have zero quantity
     # @return [true,false]
     def empty?

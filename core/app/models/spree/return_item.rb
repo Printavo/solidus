@@ -272,10 +272,10 @@ module Spree
       }).where.not(id: id).first
 
       if other_return_item && (new_record? || COMPLETED_RECEPTION_STATUSES.include?(reception_status.to_sym))
-        errors.add(:inventory_unit, :other_completed_return_item_exists, {
+        # Rails 6.1: ActiveModel::Errors#add takes keyword options, not a positional hash
+        errors.add(:inventory_unit, :other_completed_return_item_exists,
           inventory_unit_id: inventory_unit_id,
-          return_item_id: other_return_item.id
-        })
+          return_item_id: other_return_item.id)
       end
     end
 
