@@ -25,6 +25,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'solidus_core', s.version
 
   s.add_dependency 'coffee-rails'
+  # Ruby 3.4: csv is no longer a default gem; promotion_codes_controller requires it.
+  # Mirrors solidusio/solidus#6117
+  s.add_dependency 'csv'
   s.add_dependency 'font-awesome-rails', '~> 4.0'
   s.add_dependency 'jbuilder', '~> 2.8'
   s.add_dependency 'jquery-rails'
