@@ -15,6 +15,16 @@ module Spree
         generator.test_framework :rspec
       end
 
+      # Rails 7.1: serialized YAML columns are dumped/loaded with safe YAML.
+      # Permit the classes Spree stores in preference hashes (e.g. promotion
+      # rule preferences arrive as HashWithIndifferentAccess from params).
+      # Mirrors solidusio/solidus#4451.
+      if ActiveRecord.respond_to?(:yaml_column_permitted_classes) || ActiveRecord::Base.respond_to?(:yaml_column_permitted_classes)
+        config.active_record.yaml_column_permitted_classes ||= []
+        config.active_record.yaml_column_permitted_classes |=
+          [Symbol, BigDecimal, ActiveSupport::HashWithIndifferentAccess]
+      end
+
       initializer "spree.environment", before: :load_config_initializers do |app|
         app.config.spree = Spree::Config.environment
       end

@@ -50,7 +50,9 @@ module DummyApp
   end
 
   class Application < ::Rails::Application
-    config.active_record.yaml_column_permitted_classes = [BigDecimal, Date, Symbol, Time]
+    # HashWithIndifferentAccess: promotion rule preferences arrive from params
+    # and are stored in serialized YAML preference columns (mirrors solidusio/solidus#4451).
+    config.active_record.yaml_column_permitted_classes = [BigDecimal, Date, Symbol, Time, ActiveSupport::HashWithIndifferentAccess]
     config.after_initialize { ActiveRecord.yaml_column_permitted_classes |= [Spree::Role] }
     config.has_many_inverse = true
     config.eager_load = false
