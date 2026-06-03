@@ -42,7 +42,13 @@ Gem::Specification.new do |s|
   s.add_dependency 'kt-paperclip', ['>= 4.4.0', '< 7']
   s.add_dependency 'paranoia', '~> 3.0'
   s.add_dependency 'ransack', '~> 4.0'
-  s.add_dependency 'state_machines-activerecord', '~> 0.6'
+  # Pin state_machines below 0.10: newer releases stopped defining state predicates that
+  # conflict with existing methods (state-machines/state_machines#114, #135), which breaks
+  # Payment's `invalid?` state predicate and causes infinite recursion (SystemStackError) in
+  # `before_validation :validate_source, unless: :invalid?`. Mirrors upstream Solidus >= 4.6.
+  # See https://github.com/solidusio/solidus/issues/6326
+  s.add_dependency 'state_machines', ['~> 0.6', '< 0.10.0']
+  s.add_dependency 'state_machines-activerecord', ['~> 0.6', '< 0.10.0']
 
   s.post_install_message = <<-MSG
 -------------------------------------------------------------
