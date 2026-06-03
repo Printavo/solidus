@@ -30,14 +30,9 @@ module Spree
       end
 
       def self.deprecate_cherry_picking
-        callsites = caller
-        core_root = Spree::Core::Engine.root.to_s
-        index = callsites.index { |line| !line.start_with? core_root }
-
         Spree::Deprecation.warn(
           "Please do not cherry-pick factories, this is not well supported by FactoryBot, " \
-          'follow the changelog instructions on how to migrate your current setup.',
-          callsites[index..-1]
+          'follow the changelog instructions on how to migrate your current setup.'
         )
       end
 
@@ -50,7 +45,7 @@ module Spree
         unless requirement.satisfied_by? version
           Spree::Deprecation.warn(
             "Please be aware that the supported version of FactoryBot is #{requirement}, " \
-            "using version #{version} could lead to factory loading issues.", caller(2)
+            "using version #{version} could lead to factory loading issues."
           )
         end
       end

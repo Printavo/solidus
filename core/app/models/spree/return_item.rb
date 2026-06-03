@@ -95,7 +95,7 @@ module Spree
       Deprecation.warn \
         'From Solidus v2.11 onwards, #skip_customer_return_processing does ' \
         'nothing, and #process_inventory_unit! will restore calling ' \
-        'customer_return#process_return!', caller(1)
+        'customer_return#process_return!'
     end
 
     # @param inventory_unit [Spree::InventoryUnit] the inventory for which we

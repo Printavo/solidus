@@ -195,7 +195,7 @@ module Spree
     def self.register_update_hook(hook)
       Spree::Deprecation.warn \
         "Spree::Order::update_hooks are deprecated. Please remove them " \
-        "and subscribe to `order_recalculated` and/or `order_finalized` event instead", caller(1)
+        "and subscribe to `order_recalculated` and/or `order_finalized` event instead"
       update_hooks.add(hook)
     end
 
@@ -459,8 +459,7 @@ module Spree
       if method(:deliver_order_confirmation_email).owner != self.class
         Spree::Deprecation.warn \
           "deliver_order_confirmation_email has been deprecated and moved to " \
-          "Spree::MailerSubscriber#order_finalized, please move there any customizations.",
-          caller(1)
+          "Spree::MailerSubscriber#order_finalized, please move there any customizations."
       end
     end
 
@@ -473,8 +472,7 @@ module Spree
     def deliver_order_confirmation_email
       Spree::Deprecation.warn \
         "deliver_order_confirmation_email has been deprecated and moved to " \
-        "Spree::MailerSubscriber#order_finalized.",
-        caller(1)
+        "Spree::MailerSubscriber#order_finalized."
 
       Spree::Config.order_mailer_class.confirm_email(self).deliver_later
       update_column(:confirmation_delivered, true)

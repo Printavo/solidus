@@ -26,8 +26,7 @@ module Spree
       def add_class(name)
         Spree::Deprecation.warn(
           'This method is deprecated. ' \
-          "Please use `#{self.class}.add_class_set(#{name.inspect})` instead.",
-          caller,
+          "Please use `#{self.class}.add_class_set(#{name.inspect})` instead."
         )
         singleton_class.send(:add_class_set, name)
       end

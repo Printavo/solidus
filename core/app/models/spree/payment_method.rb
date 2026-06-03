@@ -25,8 +25,7 @@ module Spree
     def self.const_missing(name)
       if name == :DISPLAY
         Spree::Deprecation.warn(
-          "#{self}::DISPLAY has been deprecated and will be removed in Solidus v3.",
-          caller
+          "#{self}::DISPLAY has been deprecated and will be removed in Solidus v3."
         )
         const_set(:DISPLAY, [:both, :front_end, :back_end])
       else

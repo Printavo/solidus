@@ -158,8 +158,7 @@ module Spree
 
     def currency=(_currency)
       Spree::Deprecation.warn 'Spree::LineItem#currency= is deprecated ' \
-        'and will take no effect.',
-        caller
+        'and will take no effect.'
     end
 
     private
@@ -192,8 +191,7 @@ module Spree
       copy_price
       Spree::Deprecation.warn 'You have overridden Spree::LineItem#copy_price. ' \
         'This method is now called Spree::LineItem#set_pricing_attributes. ' \
-        'Please adjust your override.',
-        caller
+        'Please adjust your override.'
     end
 
     def update_inventory

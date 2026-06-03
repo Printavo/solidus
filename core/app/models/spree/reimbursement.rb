@@ -107,7 +107,7 @@ module Spree
         if reimbursement_success_hooks.any?
           Spree::Deprecation.warn \
             "reimbursement_success_hooks are deprecated. Please remove them " \
-            "and subscribe to `reimbursement_reimbursed` event instead", caller(1)
+            "and subscribe to `reimbursement_reimbursed` event instead"
         end
         reimbursement_success_hooks.each { |hook| hook.call self }
       else
@@ -116,7 +116,7 @@ module Spree
         if reimbursement_failure_hooks.any?
           Spree::Deprecation.warn \
             "reimbursement_failure_hooks are deprecated. Please remove them " \
-            "and subscribe to `reimbursement_errored` event instead", caller(1)
+            "and subscribe to `reimbursement_errored` event instead"
         end
         reimbursement_failure_hooks.each { |hook| hook.call self }
       end
@@ -171,7 +171,7 @@ module Spree
       if Spree::Config.use_legacy_store_credit_reimbursement_category_name
         Spree::Deprecation.warn("Using the legacy reimbursement_category_name is deprecated. "\
           "Set Spree::Config.use_legacy_store_credit_reimbursement_category_name to false to use "\
-          "the new version instead.", caller)
+          "the new version instead.")
 
         name = Spree::StoreCreditCategory.reimbursement_category_name
         return Spree::StoreCreditCategory.find_by(name: name) || Spree::StoreCreditCategory.first

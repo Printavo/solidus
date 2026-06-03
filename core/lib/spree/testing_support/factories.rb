@@ -4,7 +4,7 @@ require 'spree/testing_support/factory_bot'
 
 Spree::Deprecation.warn(
   "Please do not try to load factories directly. " \
-  'Use factory_bot_rails and rely on the default configuration instead.', caller(1)
+  'Use factory_bot_rails and rely on the default configuration instead.'
 )
 
 Spree::TestingSupport::FactoryBot.check_version

@@ -261,8 +261,7 @@ module Spree
         Spree::Deprecation.warn \
           "#{self.class}#state_validate private method has been deprecated" \
           " and will be removed in Solidus v3." \
-          " Check https://github.com/solidusio/solidus/pull/3129 for more details.",
-          caller
+          " Check https://github.com/solidusio/solidus/pull/3129 for more details."
       end
 
       # Skip state validation without country (also required)
@@ -304,8 +303,7 @@ module Spree
         Spree::Deprecation.warn \
           "#{self.class}#validate_state_matches_country private method has been deprecated" \
           " and will be removed in Solidus v3." \
-          " Check https://github.com/solidusio/solidus/pull/3129 for more details.",
-          caller
+          " Check https://github.com/solidusio/solidus/pull/3129 for more details."
       end
 
       return unless country
