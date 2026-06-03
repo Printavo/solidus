@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Promotion::Rules::UserRole, type: :model do
-  # Ruby 3.4: role_ids preference stores Integer IDs (safe YAML rejects AR objects); pass ids, matching real app usage
+  # Safe-YAML preference columns reject serialized AR objects; store role ids instead
+  # (mirrors solidusio/solidus#4451, 15c594fbd; CVE-2022-32224 hardening)
   let(:rule) { described_class.new(preferred_role_ids: roles_for_rule.map(&:id)) }
   let(:user) { create(:user, spree_roles: roles_for_user) }
   let(:roles_for_rule) { [] }

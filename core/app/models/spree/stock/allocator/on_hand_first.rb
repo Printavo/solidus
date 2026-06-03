@@ -5,13 +5,15 @@ module Spree
     module Allocator
       class OnHandFirst < Spree::Stock::Allocator::Base
         def allocate_inventory(desired)
+          # Rails 7: AS Enumerable#sum override was removed; native Array#sum seeds with Integer 0,
+          # which StockQuantities cannot coerce. Use reduce(&:+) (mirrors solidusio/solidus#4220, b7bea445f)
           # Allocate any available on hand inventory
           on_hand = allocate_on_hand(desired)
-          desired -= on_hand.values.sum if on_hand.present?
+          desired -= on_hand.values.reduce(&:+) if on_hand.present?
 
           # Allocate remaining desired inventory from backorders
           backordered = allocate_backordered(desired)
-          desired -= backordered.values.sum if backordered.present?
+          desired -= backordered.values.reduce(&:+) if backordered.present?
 
           # If all works at this point desired must be empty
           [on_hand, backordered, desired]
