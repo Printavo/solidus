@@ -322,6 +322,7 @@ module Spree
 
     def update!(order_or_attrs)
       if order_or_attrs.is_a?(Spree::Order)
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn "Calling Shipment#update! with an order to update the shipments state is deprecated. Please use Shipment#update_state instead."
         if order_or_attrs.object_id != order.object_id
           Spree::Deprecation.warn "Additionally, update! is being passed an instance of order which isn't the same object as the shipment's order association"

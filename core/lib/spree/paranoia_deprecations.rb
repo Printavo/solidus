@@ -4,6 +4,7 @@ module Spree
   module ParanoiaDeprecations
     module InstanceMethods
       def paranoia_destroy
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn <<~WARN
           Calling #destroy (or #paranoia_destroy) on a #{self.class} currently performs a soft-destroy using the paranoia gem.
           In Solidus 3.0, paranoia will be removed, and this will perform a HARD destroy instead. To continue soft-deleting, use #discard instead.

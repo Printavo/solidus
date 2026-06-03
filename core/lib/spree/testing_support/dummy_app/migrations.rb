@@ -16,6 +16,7 @@ module DummyApp
     def needs_migration?
       return true if !database_exists?
 
+      # Rails 7.1: migration_context moved to the connection pool (matches Solidus 4.5)
       ActiveRecord::Base.connection_pool.migration_context.needs_migration?
     end
 

@@ -17,6 +17,7 @@ module Spree
 
       # Because JSTree wants parameters in a *slightly* different format
       def jstree
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn("Please don't use `/api/taxonomies/:taxonomy_id/jstree` endpoint. It is deprecated and will be removed in the next future.")
         show
       end

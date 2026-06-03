@@ -62,6 +62,7 @@ module Spree
         mattr_writer "#{method_name}_handler"
 
         define_method "#{method_name}_handler" do
+          # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
           Spree::Deprecation.warn("#{name}.#{method_name}_handler and #{name}.#{method_name}_handler= from the old events mapping interface are deprecated. Please use the new mapping stored in Spree::Event.subscribers.")
 
           class_variable_get("@@#{method_name}_handler")

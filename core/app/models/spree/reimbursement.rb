@@ -93,6 +93,7 @@ module Spree
 
     def perform!(created_by: nil)
       unless created_by
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
       end
       reimbursement_tax_calculator.call(self)

@@ -86,6 +86,7 @@ module Spree
 
       it 'requires a stock_location_id to be passed as a parameter' do
         get spree.api_stock_items_path
+        # Rails 8.0: ParameterMissing message gained "or invalid"; match both forms (mirrors the Solidus 4.5 spec)
         expect(json_response['exception']).to match(/param is missing or the value is empty( or invalid)?: stock_location_id/)
         expect(response.status).to eq(422)
       end

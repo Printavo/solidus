@@ -24,6 +24,7 @@ module Spree
     # @private
     def self.const_missing(name)
       if name == :DISPLAY
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn(
           "#{self}::DISPLAY has been deprecated and will be removed in Solidus v3."
         )

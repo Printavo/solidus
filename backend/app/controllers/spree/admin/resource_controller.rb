@@ -149,6 +149,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def model_name
+    # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
     Spree::Deprecation.warn('model_name is deprecated. Please use parent_model_name instead.')
     parent_model_name
   end

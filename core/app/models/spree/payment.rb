@@ -25,6 +25,7 @@ module Spree
     has_many :capture_events, class_name: 'Spree::PaymentCaptureEvent'
     has_many :refunds, inverse_of: :payment
 
+    # Restored upstream 2.11's validate_source (replaces the fork's validates_associated workaround); safe again under the state_machines < 0.10 pin — see solidusio/solidus#6326
     before_validation :validate_source, unless: :invalid?
     before_create :set_unique_identifier
 

@@ -128,6 +128,7 @@ module Spree
       deprecate icon: :solidus_icon, deprecator: Spree::Deprecation
 
       def button(text, icon_name = nil, button_type = 'submit', options = {})
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn "button helper is deprecated. Instead use button_tag"
         class_names = "button"
         if icon_name

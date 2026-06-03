@@ -91,6 +91,7 @@ module Spree
     #
     # @deprecated Please use `Spree::Tax::OrderAdjuster#adjust!` instead
     def adjust(_order_tax_zone, item)
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
       Spree::Deprecation.warn("`Spree::TaxRate#adjust` is deprecated. Please use `Spree::Tax::OrderAdjuster#adjust!` instead.")
 
       amount = compute_amount(item)

@@ -39,6 +39,7 @@ module Spree
     # Loading the files has the side effect of adding their module to the
     # list in Spree::Event.subscribers.
     def require_subscriber_files
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
       Spree::Deprecation.warn("#{self}.require_subscriber_files is deprecated and will be removed in Solidus 3.0.")
       subscriber_registry.send(:require_subscriber_files)
     end

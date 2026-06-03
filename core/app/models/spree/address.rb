@@ -136,6 +136,7 @@ module Spree
 
     # @deprecated Do not use this. Use Address.== instead.
     def same_as?(other_address)
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
       Spree::Deprecation.warn("Address#same_as? is deprecated. It's equivalent to Address.==")
       self == other_address
     end

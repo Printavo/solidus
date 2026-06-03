@@ -56,6 +56,7 @@ module Spree
       normalized_action = CUSTOM_ALIASES_MAP.fetch(action, action)
 
       if action == :read
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn <<~WARN
           The behavior of CanCanCan `:read` action alias will be changing in Solidus 3.0.
           The current alias is: `:show, :to => :read`,

@@ -75,6 +75,7 @@ module DummyApp
     config.secret_key_base = 'SECRET_TOKEN'
 
     config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob" if RAILS_6_OR_ABOVE
+    # Rails 7.1: preview_path renamed to preview_paths (matches Solidus 4.5)
     config.action_mailer.preview_paths = [File.expand_path('dummy_app/mailer_previews', __dir__)]
     config.active_record.sqlite3.represent_boolean_as_integer = true unless RAILS_6_OR_ABOVE
 

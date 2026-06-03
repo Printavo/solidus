@@ -41,6 +41,7 @@ module Spree
           @money = Monetize.from_string(amount, currency)
         else
           @money = Spree::Money.parse_to_money(amount, currency)
+          # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
           Spree::Deprecation.warn <<-WARN.squish
             Spree::Money was initialized with #{amount.inspect}, which will not be supported in the future.
             Instead use Spree::Money.new(#{@money.to_s.inspect}, options) or Spree::Money.parse(#{amount.inspect})

@@ -38,6 +38,7 @@ namespace :db do
     # railties:install:migrations and then db:migrate.
     # Migrations should be run one directory at a time
     ActiveRecord::Migrator.migrations_paths.each do |path|
+      # Rails 7.1: MigrationContext takes a single migrations-paths argument (matches Solidus 4.5)
       ActiveRecord::MigrationContext.new([path]).migrate
     end
 

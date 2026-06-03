@@ -5,6 +5,7 @@ module Spree
     extend ActiveSupport::Concern
 
     def default_credit_card
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
       Spree::Deprecation.warn(
         "user.default_credit_card is deprecated. Please use user.wallet.default_wallet_payment_source instead."
       )

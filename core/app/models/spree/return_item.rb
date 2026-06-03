@@ -92,6 +92,7 @@ module Spree
 
     def skip_customer_return_processing=(value)
       @skip_customer_return_processing = value
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
       Deprecation.warn \
         'From Solidus v2.11 onwards, #skip_customer_return_processing does ' \
         'nothing, and #process_inventory_unit! will restore calling ' \

@@ -66,6 +66,7 @@ module Spree
     # Customer info
     belongs_to :user, class_name: Spree::UserClassHandle.new, optional: true
     belongs_to :bill_address, foreign_key: :bill_address_id, class_name: 'Spree::Address', optional: true
+    # Restores upstream's reader+writer alias_method form; the fork's duplicate belongs_to on the same FK gave each name an independent association proxy and no setter (matches solidusio/solidus order.rb)
     alias_method :billing_address, :bill_address
     alias_method :billing_address=, :bill_address=
 
@@ -195,6 +196,7 @@ module Spree
     # Use this method in other gems that wish to register their own custom logic
     # that should be called after Order#update
     def self.register_update_hook(hook)
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
       Spree::Deprecation.warn \
         "Spree::Order::update_hooks are deprecated. Please remove them " \
         "and subscribe to `order_recalculated` and/or `order_finalized` event instead"

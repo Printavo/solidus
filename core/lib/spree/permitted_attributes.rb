@@ -158,6 +158,7 @@ module Spree
     @@checkout_confirm_attributes = []
 
     def self.checkout_attributes
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
       Spree::Deprecation.warn <<-WARN.squish
         checkout_attributes is deprecated, please use the permitted
         attributes set for the specific step that needs to be updated.

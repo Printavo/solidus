@@ -157,6 +157,7 @@ module Spree
     end
 
     def currency=(_currency)
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
       Spree::Deprecation.warn 'Spree::LineItem#currency= is deprecated ' \
         'and will take no effect.'
     end

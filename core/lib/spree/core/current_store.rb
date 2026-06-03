@@ -9,6 +9,7 @@ module Spree
       def initialize(request)
         @request = request
         @current_store_selector = Spree::Config.current_store_selector_class.new(request)
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn "Using Spree::Core::CurrentStore is deprecated. Use Spree::Config.current_store_selector_class instead"
       end
 

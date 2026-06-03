@@ -69,6 +69,7 @@ module Spree
       def order
         @order ||= begin
           if Spree::Config.use_legacy_order_state_machine
+            # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
             Spree::Deprecation.warn(
               "Spree::Order state machine defined in Spree::Order::Checkout is deprecated. " \
               "Future versions of Solidus will use Spree::Core::StateMachines::Order}"

@@ -71,6 +71,7 @@ describe Spree::Api::ShipmentsController, type: :request do
           it 'should return proper error' do
             subject
             expect(response.status).to eq(422)
+            # Rails 8.0: ParameterMissing message gained "or invalid"; match both forms (mirrors the Solidus 4.5 spec)
             expect(json_response['exception']).to match(/param is missing or the value is empty( or invalid)?: #{field}/)
           end
         end

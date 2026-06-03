@@ -67,6 +67,7 @@ module Spree
 
       config.after_initialize do
         if Spree::Config.raise_with_invalid_currency == true
+          # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
           Spree::Deprecation.warn(
             'Spree::Config.raise_with_invalid_currency set to true is ' \
             'deprecated. Please note that by switching this value, ' \

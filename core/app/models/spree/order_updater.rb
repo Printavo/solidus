@@ -33,6 +33,7 @@ module Spree
     end
 
     def run_hooks
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
       Spree::Deprecation.warn \
         "This method is deprecated. Please run your hooks by subscribing " \
         "to `order_recalculated` and/or `order_finalized` events instead, depending " \

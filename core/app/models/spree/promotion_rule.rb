@@ -44,6 +44,7 @@ module Spree
 
     def unique_per_promotion
       if Spree::PromotionRule.exists?(promotion_id: promotion_id, type: self.class.name)
+        # Rails 8: the errors collection is frozen against direct mutation; use errors.add (matches Solidus 4.5)
         errors.add(:base, "Promotion already contains this rule type")
       end
     end

@@ -30,6 +30,7 @@ module Spree
       end
 
       def self.deprecate_cherry_picking
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn(
           "Please do not cherry-pick factories, this is not well supported by FactoryBot, " \
           'follow the changelog instructions on how to migrate your current setup.'

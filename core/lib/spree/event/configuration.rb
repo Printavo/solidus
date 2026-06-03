@@ -8,6 +8,7 @@ module Spree
       end
 
       def subscribers
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn("`Spree::Config.events.subscribers` is deprecated. Please use `Spree::Config.events.subscriber_registry`.")
         subscriber_registry.send(:registry).keys.map { |module_name| module_name.constantize }
       end
