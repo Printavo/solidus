@@ -65,7 +65,10 @@ module DummyApp
     config.action_controller.allow_forgery_protection = false
     config.action_controller.default_protect_from_forgery = false
     config.action_controller.perform_caching = false
-    config.action_dispatch.show_exceptions = false
+    # Rails 7.1: show_exceptions takes a symbol; :none re-raises (false no
+    # longer does), which specs rely on to assert routing errors. Mirrors
+    # solidusio/solidus#4451 dummy_app changes.
+    config.action_dispatch.show_exceptions = Rails.gem_version >= Gem::Version.new("7.1") ? :none : false
     config.active_support.deprecation = :stderr
     config.action_mailer.delivery_method = :test
     config.active_support.deprecation = :stderr
