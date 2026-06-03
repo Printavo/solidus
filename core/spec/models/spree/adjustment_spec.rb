@@ -230,7 +230,6 @@ RSpec.describe Spree::Adjustment, type: :model do
           receive(:warn).
           with(
             /Adjustment \d+ was not added to #{adjustable.class} #{adjustable.id}/,
-            instance_of(Array),
           )
         )
       end
@@ -317,7 +316,6 @@ RSpec.describe Spree::Adjustment, type: :model do
           receive(:warn).
           with(
             /Adjustment #{adjustment.id} was not removed from #{adjustable.class} #{adjustable.id}/,
-            instance_of(Array),
           )
         )
       end
