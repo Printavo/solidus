@@ -7,10 +7,12 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
 
   # Regression test for https://github.com/spree/spree/issues/1240
   it "should not hard-delete shipping methods" do
-    shipping_method = stub_model(Spree::ShippingMethod)
-    allow(Spree::ShippingMethod).to receive_messages find: shipping_method
-    expect(shipping_method.deleted_at).to be_nil
-    delete :destroy, params: { id: 1 }
+    # Rails 7.1: discard + stub_model no longer round-trips through reload;
+    # use a persisted record. Mirrors solidusio/solidus#4220.
+    shipping_method = create(:shipping_method)
+
+    delete :destroy, params: { id: shipping_method.id }
+
     expect(shipping_method.reload.deleted_at).not_to be_nil
   end
 end
