@@ -51,7 +51,8 @@ module Spree
       end
 
       def load_providers
-        Spree::Deprecation.warn('load_providers is deprecated. Please use load_payment_method_types instead.', caller)
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
+        Spree::Deprecation.warn('load_providers is deprecated. Please use load_payment_method_types instead.')
         load_payment_method_types
       end
 
@@ -62,7 +63,7 @@ module Spree
       end
 
       def validate_payment_provider
-        Spree::Deprecation.warn('validate_payment_provider is deprecated. Please use validate_payment_method_type instead.', caller)
+        Spree::Deprecation.warn('validate_payment_provider is deprecated. Please use validate_payment_method_type instead.')
         validate_payment_method_type
       end
 

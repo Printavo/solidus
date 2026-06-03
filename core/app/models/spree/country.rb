@@ -12,7 +12,8 @@ module Spree
 
     def self.default
       if Spree::Config.default_country_id
-        Spree::Deprecation.warn("Setting your default country via its ID is deprecated. Please set your default country via the `default_country_iso` setting.", caller)
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
+        Spree::Deprecation.warn("Setting your default country via its ID is deprecated. Please set your default country via the `default_country_iso` setting.")
         find_by(id: Spree::Config.default_country_id) || find_by!(iso: Spree::Config.default_country_iso)
       else
         find_by!(iso: Spree::Config.default_country_iso)

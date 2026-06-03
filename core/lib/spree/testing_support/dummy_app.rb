@@ -35,7 +35,12 @@ end
 module DummyApp
   def self.setup(gem_root:, lib_name:, auto_migrate: true)
     ENV["LIB_NAME"] = lib_name
-    DummyApp::Application.config.root = File.join(gem_root, 'spec', 'dummy')
+    # Sprockets 4: a manifest file is required to boot; mirrors solidusio/solidus#3379
+    root = Pathname(gem_root).join('spec/dummy')
+    root.join("app/assets/config").mkpath
+    root.join("app/assets/config/manifest.js").write("// Intentionally empty\n")
+
+    DummyApp::Application.config.root = root
 
     DummyApp::Application.initialize!
 
@@ -45,6 +50,10 @@ module DummyApp
   end
 
   class Application < ::Rails::Application
+    # HashWithIndifferentAccess: promotion rule preferences arrive from params
+    # and are stored in serialized YAML preference columns (mirrors solidusio/solidus#4451).
+    config.active_record.yaml_column_permitted_classes = [BigDecimal, Date, Symbol, Time, ActiveSupport::HashWithIndifferentAccess]
+    config.after_initialize { ActiveRecord.yaml_column_permitted_classes |= [Spree::Role] }
     config.has_many_inverse = true
     config.eager_load = false
     config.cache_classes = true
@@ -56,14 +65,18 @@ module DummyApp
     config.action_controller.allow_forgery_protection = false
     config.action_controller.default_protect_from_forgery = false
     config.action_controller.perform_caching = false
-    config.action_dispatch.show_exceptions = false
+    # Rails 7.1: show_exceptions takes a symbol; :none re-raises (false no
+    # longer does), which specs rely on to assert routing errors. Mirrors
+    # solidusio/solidus#4451 dummy_app changes.
+    config.action_dispatch.show_exceptions = Rails.gem_version >= Gem::Version.new("7.1") ? :none : false
     config.active_support.deprecation = :stderr
     config.action_mailer.delivery_method = :test
     config.active_support.deprecation = :stderr
     config.secret_key_base = 'SECRET_TOKEN'
 
     config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob" if RAILS_6_OR_ABOVE
-    config.action_mailer.preview_path = File.expand_path('dummy_app/mailer_previews', __dir__)
+    # Rails 7.1: preview_path renamed to preview_paths (matches Solidus 4.5)
+    config.action_mailer.preview_paths = [File.expand_path('dummy_app/mailer_previews', __dir__)]
     config.active_record.sqlite3.represent_boolean_as_integer = true unless RAILS_6_OR_ABOVE
 
     config.storage_path = Rails.root.join('tmp', 'storage')

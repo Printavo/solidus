@@ -136,19 +136,20 @@ module Spree
 
     # @deprecated Do not use this. Use Address.== instead.
     def same_as?(other_address)
-      Spree::Deprecation.warn("Address#same_as? is deprecated. It's equivalent to Address.==", caller)
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
+      Spree::Deprecation.warn("Address#same_as? is deprecated. It's equivalent to Address.==")
       self == other_address
     end
 
     # @deprecated Do not use this. Use Address.== instead.
     def same_as(other_address)
-      Spree::Deprecation.warn("Address#same_as is deprecated. It's equivalent to Address.==", caller)
+      Spree::Deprecation.warn("Address#same_as is deprecated. It's equivalent to Address.==")
       self == other_address
     end
 
     # @deprecated Do not use this
     def empty?
-      Spree::Deprecation.warn("Address#empty? is deprecated.", caller)
+      Spree::Deprecation.warn("Address#empty? is deprecated.")
       attributes.except('id', 'created_at', 'updated_at', 'country_id').all? { |_, value| value.nil? }
     end
 
@@ -261,8 +262,7 @@ module Spree
         Spree::Deprecation.warn \
           "#{self.class}#state_validate private method has been deprecated" \
           " and will be removed in Solidus v3." \
-          " Check https://github.com/solidusio/solidus/pull/3129 for more details.",
-          caller
+          " Check https://github.com/solidusio/solidus/pull/3129 for more details."
       end
 
       # Skip state validation without country (also required)
@@ -304,8 +304,7 @@ module Spree
         Spree::Deprecation.warn \
           "#{self.class}#validate_state_matches_country private method has been deprecated" \
           " and will be removed in Solidus v3." \
-          " Check https://github.com/solidusio/solidus/pull/3129 for more details.",
-          caller
+          " Check https://github.com/solidusio/solidus/pull/3129 for more details."
       end
 
       return unless country

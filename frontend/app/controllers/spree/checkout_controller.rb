@@ -112,7 +112,8 @@ module Spree
 
       move_payment_source_into_payments_attributes(massaged_params)
       if massaged_params[:order] && massaged_params[:order][:existing_card].present?
-        Spree::Deprecation.warn("Passing order[:existing_card] is deprecated. Send order[:wallet_payment_source_id] instead.", caller)
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
+        Spree::Deprecation.warn("Passing order[:existing_card] is deprecated. Send order[:wallet_payment_source_id] instead.")
         move_existing_card_into_payments_attributes(massaged_params) # deprecated
       end
       move_wallet_payment_source_id_into_payments_attributes(massaged_params)

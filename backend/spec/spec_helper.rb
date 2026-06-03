@@ -58,7 +58,8 @@ end
 
 Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 
-ActionView::Base.raise_on_missing_translations = true
+# Rails 6.1: option moved from ActionView to I18n (rails/rails#31571); mirrors solidusio/solidus#4220
+Rails.application.config.i18n.raise_on_missing_translations = true
 
 Capybara.default_max_wait_time = ENV['DEFAULT_MAX_WAIT_TIME'].to_f if ENV['DEFAULT_MAX_WAIT_TIME'].present?
 
@@ -69,6 +70,17 @@ Spree::TestingSupport::FactoryBot.add_paths_and_load!
 RSpec.configure do |config|
   config.color = true
   config.infer_spec_type_from_file_location!
+
+  # Chrome's new headless mode reports a default 800x600 screen regardless of
+  # --window-size; admin_nav.js auto-collapses the sidebar at screen.width <= 1024,
+  # hiding the nav text labels that feature specs click through.
+  config.before(:each, js: true) do
+    page.driver.browser.execute_cdp(
+      'Emulation.setDeviceMetricsOverride',
+      width: 1920, height: 1080, deviceScaleFactor: 1, mobile: false,
+      screenWidth: 1920, screenHeight: 1080
+    )
+  end
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end

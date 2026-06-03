@@ -39,7 +39,7 @@ RSpec.describe Spree::PromotionAction, type: :model do
 
       expect(Spree::Deprecation).to(
         receive(:warn).
-        with(/"MyPromotionAction" does not define #remove_from/, anything)
+        with(/"MyPromotionAction" does not define #remove_from/)
       )
 
       action.remove_from(order)

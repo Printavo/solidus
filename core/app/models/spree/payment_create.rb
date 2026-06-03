@@ -30,9 +30,9 @@ module Spree
       @payment.attributes = @attributes
 
       if source_attributes[:existing_card_id].present?
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn(
-          "Passing existing_card_id to PaymentCreate is deprecated. Use wallet_payment_source_id instead.",
-          caller,
+          "Passing existing_card_id to PaymentCreate is deprecated. Use wallet_payment_source_id instead."
         )
         build_existing_card
       elsif source_attributes[:wallet_payment_source_id].present?

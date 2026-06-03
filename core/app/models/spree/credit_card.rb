@@ -22,6 +22,7 @@ module Spree
     scope :with_payment_profile, -> { where('gateway_customer_profile_id IS NOT NULL') }
 
     def self.default
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
       Spree::Deprecation.warn("CreditCard.default is deprecated. Please use Spree::Wallet instead.")
       joins(:wallet_payment_sources).where(spree_wallet_payment_sources: { default: true })
     end
@@ -47,13 +48,13 @@ module Spree
     }.freeze
 
     def default
-      Spree::Deprecation.warn("CreditCard#default is deprecated. Please use user.wallet.default_wallet_payment_source instead.", caller)
+      Spree::Deprecation.warn("CreditCard#default is deprecated. Please use user.wallet.default_wallet_payment_source instead.")
       return false if user.nil?
       user.wallet.default_wallet_payment_source.try!(:payment_source) == self
     end
 
     def default=(set_as_default)
-      Spree::Deprecation.warn("CreditCard#default= is deprecated. Please use user.wallet.default_wallet_payment_source= instead.", caller)
+      Spree::Deprecation.warn("CreditCard#default= is deprecated. Please use user.wallet.default_wallet_payment_source= instead.")
       if user.nil?
         raise "Cannot set 'default' on a credit card without a user"
       elsif set_as_default # setting this card as default

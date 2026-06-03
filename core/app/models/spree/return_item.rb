@@ -92,10 +92,11 @@ module Spree
 
     def skip_customer_return_processing=(value)
       @skip_customer_return_processing = value
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
       Deprecation.warn \
         'From Solidus v2.11 onwards, #skip_customer_return_processing does ' \
         'nothing, and #process_inventory_unit! will restore calling ' \
-        'customer_return#process_return!', caller(1)
+        'customer_return#process_return!'
     end
 
     # @param inventory_unit [Spree::InventoryUnit] the inventory for which we
@@ -272,10 +273,10 @@ module Spree
       }).where.not(id: id).first
 
       if other_return_item && (new_record? || COMPLETED_RECEPTION_STATUSES.include?(reception_status.to_sym))
-        errors.add(:inventory_unit, :other_completed_return_item_exists, {
+        # Rails 6.1: ActiveModel::Errors#add takes keyword options, not a positional hash
+        errors.add(:inventory_unit, :other_completed_return_item_exists,
           inventory_unit_id: inventory_unit_id,
-          return_item_id: other_return_item.id
-        })
+          return_item_id: other_return_item.id)
       end
     end
 

@@ -16,7 +16,7 @@ group :backend, :frontend, :core, :api do
   # Temporarily locking sprockets to v3.x
   # see https://github.com/solidusio/solidus/issues/3374
   # and https://github.com/rails/sprockets-rails/issues/369
-  gem 'sprockets', '~> 3'
+  gem 'sprockets', '~> 4'
 
   # Temporary locking money to 6.13.8.
   # See https://github.com/solidusio/solidus/issues/3903
@@ -39,9 +39,9 @@ group :backend, :frontend, :core, :api do
     gem 'activerecord-jdbcsqlite3-adapter', require: false
   end
 
-  gem 'database_cleaner', '~> 1.3', require: false
+  gem 'database_cleaner', '~> 2.0', require: false
   gem 'rspec-activemodel-mocks', '~> 1.1', require: false
-  gem 'rspec-rails', '~> 4.0.1', require: false
+  gem 'rspec-rails', '~> 7.1', require: false
   gem 'simplecov', require: false
   gem 'with_model', require: false
   gem 'rails-controller-testing', require: false
@@ -84,3 +84,9 @@ gem 'yard', require: false, group: :docs
 
 custom_gemfile = File.expand_path('Gemfile-custom', __dir__)
 eval File.read(custom_gemfile), nil, custom_gemfile, 0 if File.exist?(custom_gemfile)
+
+# Ruby 3.4 extracted these from default gems; old factory_bot/test deps need them
+gem 'observer'
+gem 'mutex_m'
+gem 'benchmark'
+

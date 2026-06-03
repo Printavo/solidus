@@ -99,10 +99,11 @@
             <%= promotion.usage_count %>
           </td>
           <td>
-            <%= promotion.starts_at.to_s(:long) if promotion.starts_at %>
+            <%# Rails 7.1: to_s(format) was removed; use to_fs (mirrors solidusio/solidus#4220) %>
+            <%= promotion.starts_at.to_fs(:long) if promotion.starts_at %>
           </td>
           <td>
-            <%= promotion.expires_at.to_s(:long) if promotion.expires_at %>
+            <%= promotion.expires_at.to_fs(:long) if promotion.expires_at %>
           </td>
           <td class="actions">
             <% if can?(:edit, promotion) %>

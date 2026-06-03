@@ -24,9 +24,9 @@ module Spree
     # @private
     def self.const_missing(name)
       if name == :DISPLAY
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn(
-          "#{self}::DISPLAY has been deprecated and will be removed in Solidus v3.",
-          caller
+          "#{self}::DISPLAY has been deprecated and will be removed in Solidus v3."
         )
         const_set(:DISPLAY, [:both, :front_end, :back_end])
       else
@@ -212,13 +212,13 @@ module Spree
     # If method_type has been overridden, call it and return the value, otherwise return nil
     def deprecated_method_type_override
       if method(:method_type).owner != Spree::PaymentMethod
-        Spree::Deprecation.warn "#{method(:method_type).owner} is overriding PaymentMethod#method_type. This is deprecated and will be removed from Solidus 3.0 (override partial_name instead).", caller[1..-1]
+        Spree::Deprecation.warn "#{method(:method_type).owner} is overriding PaymentMethod#method_type. This is deprecated and will be removed from Solidus 3.0 (override partial_name instead)."
         method_type
       end
     end
 
     def method_type
-      Spree::Deprecation.warn "method_type is deprecated and will be removed from Solidus 3.0 (use partial_name instead)", caller
+      Spree::Deprecation.warn "method_type is deprecated and will be removed from Solidus 3.0 (use partial_name instead)"
       partial_name
     end
 

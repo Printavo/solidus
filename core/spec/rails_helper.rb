@@ -42,7 +42,8 @@ RSpec.configure do |config|
   end
 
   config.before :each do
-    ActiveStorage::Current.host = 'https://www.example.com'
+    # Rails 7.0: ActiveStorage::Current.host= replaced by url_options= (matches Solidus 4.5)
+    ActiveStorage::Current.url_options = { host: 'https://www.example.com' }
     Rails.cache.clear
   end
 

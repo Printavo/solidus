@@ -66,10 +66,13 @@ module Spree
     # Customer info
     belongs_to :user, class_name: Spree::UserClassHandle.new, optional: true
     belongs_to :bill_address, foreign_key: :bill_address_id, class_name: 'Spree::Address', optional: true
-    belongs_to :billing_address, foreign_key: :bill_address_id, class_name: 'Spree::Address', optional: true
+    # Restores upstream's reader+writer alias_method form; the fork's duplicate belongs_to on the same FK gave each name an independent association proxy and no setter (matches solidusio/solidus order.rb)
+    alias_method :billing_address, :bill_address
+    alias_method :billing_address=, :bill_address=
 
     belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Spree::Address', optional: true
-    belongs_to :shipping_address, foreign_key: :ship_address_id, class_name: 'Spree::Address', optional: true
+    alias_method :shipping_address, :ship_address
+    alias_method :shipping_address=, :ship_address=
     alias_attribute :ship_total, :shipment_total
 
     belongs_to :store, class_name: 'Spree::Store', optional: true
@@ -193,9 +196,10 @@ module Spree
     # Use this method in other gems that wish to register their own custom logic
     # that should be called after Order#update
     def self.register_update_hook(hook)
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
       Spree::Deprecation.warn \
         "Spree::Order::update_hooks are deprecated. Please remove them " \
-        "and subscribe to `order_recalculated` and/or `order_finalized` event instead", caller(1)
+        "and subscribe to `order_recalculated` and/or `order_finalized` event instead"
       update_hooks.add(hook)
     end
 
@@ -459,8 +463,7 @@ module Spree
       if method(:deliver_order_confirmation_email).owner != self.class
         Spree::Deprecation.warn \
           "deliver_order_confirmation_email has been deprecated and moved to " \
-          "Spree::MailerSubscriber#order_finalized, please move there any customizations.",
-          caller(1)
+          "Spree::MailerSubscriber#order_finalized, please move there any customizations."
       end
     end
 
@@ -473,8 +476,7 @@ module Spree
     def deliver_order_confirmation_email
       Spree::Deprecation.warn \
         "deliver_order_confirmation_email has been deprecated and moved to " \
-        "Spree::MailerSubscriber#order_finalized.",
-        caller(1)
+        "Spree::MailerSubscriber#order_finalized."
 
       Spree::Config.order_mailer_class.confirm_email(self).deliver_later
       update_column(:confirmation_delivered, true)
@@ -670,7 +672,7 @@ module Spree
     end
 
     def token
-      Spree::Deprecation.warn("Spree::Order#token is DEPRECATED, please use #guest_token instead.", caller)
+      Spree::Deprecation.warn("Spree::Order#token is DEPRECATED, please use #guest_token instead.")
       guest_token
     end
 
@@ -867,7 +869,7 @@ module Spree
     #   }
     #
     def update_params_payment_source
-      Spree::Deprecation.warn('update_params_payment_source is deprecated. Please use set_payment_parameters_amount instead.', caller)
+      Spree::Deprecation.warn('update_params_payment_source is deprecated. Please use set_payment_parameters_amount instead.')
       if @updating_params[:order] && (@updating_params[:order][:payments_attributes] || @updating_params[:order][:existing_card])
         @updating_params[:order][:payments_attributes] ||= [{}]
         @updating_params[:order][:payments_attributes].first[:amount] = total

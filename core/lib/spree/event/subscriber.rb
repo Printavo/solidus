@@ -62,7 +62,8 @@ module Spree
         mattr_writer "#{method_name}_handler"
 
         define_method "#{method_name}_handler" do
-          Spree::Deprecation.warn("#{name}.#{method_name}_handler and #{name}.#{method_name}_handler= from the old events mapping interface are deprecated. Please use the new mapping stored in Spree::Event.subscribers.", caller)
+          # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
+          Spree::Deprecation.warn("#{name}.#{method_name}_handler and #{name}.#{method_name}_handler= from the old events mapping interface are deprecated. Please use the new mapping stored in Spree::Event.subscribers.")
 
           class_variable_get("@@#{method_name}_handler")
         end
@@ -91,12 +92,12 @@ module Spree
       end
 
       def subscribe!
-        Spree::Deprecation.warn("#{self}.subscribe! is deprecated. Please use `#{self}.activate`.", caller)
+        Spree::Deprecation.warn("#{self}.subscribe! is deprecated. Please use `#{self}.activate`.")
         activate
       end
 
       def unsubscribe!
-        Spree::Deprecation.warn("#{self}.unsubscribe! is deprecated. Please use `#{self}.deactivate`.", caller)
+        Spree::Deprecation.warn("#{self}.unsubscribe! is deprecated. Please use `#{self}.deactivate`.")
         deactivate
       end
     end

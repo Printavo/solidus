@@ -94,7 +94,8 @@ module Spree
     def set_perform_after_create_default
       return true if perform_after_create == false
 
-      Spree::Deprecation.warn <<-WARN.strip_heredoc, caller
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
+      Spree::Deprecation.warn <<-WARN.strip_heredoc
         From Solidus v3.0 onwards, #perform! will need to be explicitly called when creating new
         refunds. Please, change your code from:
 

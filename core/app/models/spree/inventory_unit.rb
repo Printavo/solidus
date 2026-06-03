@@ -67,10 +67,10 @@ module Spree
     # @param inventory_units [<Spree::InventoryUnit>] the inventory to be
     #   finalized
     def self.finalize_units!(inventory_units)
+      # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
       Spree::Deprecation.warn(
         "inventory_units.finalize_units!(inventory_units) is deprecated. Please
-        use Spree::Stock::InventoryUnitsFinalizer.new(inventory_units).run!",
-        caller
+        use Spree::Stock::InventoryUnitsFinalizer.new(inventory_units).run!"
       )
 
       inventory_units.map do |iu|

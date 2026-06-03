@@ -322,6 +322,7 @@ module Spree
 
     def update!(order_or_attrs)
       if order_or_attrs.is_a?(Spree::Order)
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn "Calling Shipment#update! with an order to update the shipments state is deprecated. Please use Shipment#update_state instead."
         if order_or_attrs.object_id != order.object_id
           Spree::Deprecation.warn "Additionally, update! is being passed an instance of order which isn't the same object as the shipment's order association"
@@ -333,13 +334,13 @@ module Spree
     end
 
     def transfer_to_location(variant, quantity, stock_location)
-      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location", caller)
+      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location")
       new_shipment = order.shipments.create!(stock_location: stock_location)
       transfer_to_shipment(variant, quantity, new_shipment)
     end
 
     def transfer_to_shipment(variant, quantity, shipment_to_transfer_to)
-      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location", caller)
+      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location")
       Spree::FulfilmentChanger.new(
         current_shipment: self,
         desired_shipment: shipment_to_transfer_to,
@@ -353,7 +354,7 @@ module Spree
     end
 
     def address
-      Spree::Deprecation.warn("Calling Shipment#address is deprecated. Use Order#ship_address instead", caller)
+      Spree::Deprecation.warn("Calling Shipment#address is deprecated. Use Order#ship_address instead")
       order.ship_address if order
     end
 

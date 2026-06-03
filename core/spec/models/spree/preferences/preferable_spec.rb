@@ -278,6 +278,9 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
       end
 
       it "with string, encryption key provided as env variable" do
+        # Allow unrelated ENV reads (lazy requires hit e.g. BUNDLE_GEMFILE inside the mocked
+        # window on Rails 7.1+); mirrors solidusio/solidus#5359 (532dec4f9)
+        allow(ENV).to receive(:[]).and_call_original
         expect(ENV).to receive(:[]).with("SOLIDUS_PREFERENCES_MASTER_KEY").and_return("VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!")
 
         A.preference :secret, :encrypted_string

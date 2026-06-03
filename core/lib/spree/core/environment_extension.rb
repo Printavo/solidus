@@ -24,10 +24,10 @@ module Spree
       end
 
       def add_class(name)
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn(
           'This method is deprecated. ' \
-          "Please use `#{self.class}.add_class_set(#{name.inspect})` instead.",
-          caller,
+          "Please use `#{self.class}.add_class_set(#{name.inspect})` instead."
         )
         singleton_class.send(:add_class_set, name)
       end

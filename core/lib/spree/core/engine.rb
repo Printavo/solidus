@@ -15,6 +15,16 @@ module Spree
         generator.test_framework :rspec
       end
 
+      # Rails 7.1: serialized YAML columns are dumped/loaded with safe YAML.
+      # Permit the classes Spree stores in preference hashes (e.g. promotion
+      # rule preferences arrive as HashWithIndifferentAccess from params).
+      # Mirrors solidusio/solidus#4451.
+      if ActiveRecord.respond_to?(:yaml_column_permitted_classes) || ActiveRecord::Base.respond_to?(:yaml_column_permitted_classes)
+        config.active_record.yaml_column_permitted_classes ||= []
+        config.active_record.yaml_column_permitted_classes |=
+          [Symbol, BigDecimal, ActiveSupport::HashWithIndifferentAccess]
+      end
+
       initializer "spree.environment", before: :load_config_initializers do |app|
         app.config.spree = Spree::Config.environment
       end
@@ -57,32 +67,30 @@ module Spree
 
       config.after_initialize do
         if Spree::Config.raise_with_invalid_currency == true
+          # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
           Spree::Deprecation.warn(
             'Spree::Config.raise_with_invalid_currency set to true is ' \
             'deprecated. Please note that by switching this value, ' \
-            'Spree::LineItem::CurrencyMismatch will not be raised anymore.',
-            caller
+            'Spree::LineItem::CurrencyMismatch will not be raised anymore.'
           )
         end
         if Spree::Config.consider_actionless_promotion_active == true
           Spree::Deprecation.warn(
             'Spree::Config.consider_actionless_promotion_active set to true is ' \
             'deprecated. Please note that by switching this value, ' \
-            'promotions with no actions will be considered active.',
-            caller
+            'promotions with no actions will be considered active.'
           )
         end
         if Spree::Config.run_order_validations_on_order_updater != true
           Spree::Deprecation.warn(
             'Spree::Config.run_order_validations_on_order_updater set to false is ' \
             'deprecated and will not be possibile in Solidus 3.0. Please switch this ' \
-            'value to true and check that everything works as expected.',
-            caller
+            'value to true and check that everything works as expected.'
           )
         end
 
         if Spree::Config.use_legacy_address_state_validator != false
-          Spree::Deprecation.warn(<<~DEPRECATION.squish, caller)
+          Spree::Deprecation.warn(<<~DEPRECATION.squish)
             Spree::Config.use_legacy_address_state_validator set to true has been
             deprecated and will be removed in Solidus 3.0. The Spree::Address state
             validation has been extracted into a configurable external class.

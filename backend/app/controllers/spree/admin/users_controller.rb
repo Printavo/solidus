@@ -82,7 +82,8 @@ module Spree
       end
 
       def generate_api_key
-        Spree::Deprecation.warn <<-WARN.strip_heredoc, caller
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
+        Spree::Deprecation.warn <<-WARN.strip_heredoc
           The route or controller action you are using is deprecated.
 
           Instead of:
@@ -99,7 +100,7 @@ module Spree
       end
 
       def clear_api_key
-        Spree::Deprecation.warn <<-WARN.strip_heredoc, caller
+        Spree::Deprecation.warn <<-WARN.strip_heredoc
           The route or controller action you are using is deprecated.
 
           Instead of:

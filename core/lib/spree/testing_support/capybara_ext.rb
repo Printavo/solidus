@@ -36,6 +36,7 @@ module Spree
       end
 
       def fill_in_quantity(table_column, selector, quantity)
+        # Rails 8: drop the String-callstack arg from Deprecation#warn (AS 8 requires backtrace Locations); matches Solidus 4.5
         Spree::Deprecation.warn <<-WARN.strip_heredoc
           fill_in_quantity is deprecated. Instead use:
             within(#{table_column.inspect}) do
@@ -124,7 +125,7 @@ module Spree
       end
 
       def wait_for_ajax
-        Spree::Deprecation.warn <<-WARN.squish, caller
+        Spree::Deprecation.warn <<-WARN.squish
           wait_for_ajax has been deprecated.
           Please refer to the capybara documentation on how to properly wait for asyncronous behavior:
           https://github.com/teamcapybara/capybara#asynchronous-javascript-ajax-and-friends
