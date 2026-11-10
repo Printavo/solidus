@@ -35,6 +35,10 @@ gem 'i18n-tasks', '~> 0.9', require: false
 gem 'rspec_junit_formatter', require: false
 gem 'yard', require: false
 
+# image_processing 2.x no longer depends on ruby-vips; the dummy app defaults
+# to the :vips ActiveStorage variant processor.
+gem 'ruby-vips', '>= 2.0.17', '< 3', require: false
+
 # Ensure the requirement is also updated in core/lib/spree/testing_support/factory_bot.rb
 gem 'factory_bot_rails', '>= 4.8', require: false
 
